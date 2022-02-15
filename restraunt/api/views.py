@@ -2,10 +2,11 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from . import serializers
-from .models import restraunt, Recipe, Ingredient
+from .models import DeliveryOrder, restraunt, Recipe, Ingredient
 from django.http import Http404
 from rest_framework import status
-
+from django.contrib.auth.models import User
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 class restaurant(APIView):
     def get(self, request):
@@ -20,7 +21,6 @@ class restaurant(APIView):
             serializer.save()
             return Response({'msg':'Data created'})
         return Response(serializer.errors)
-
 
 
 class RestaurantDetail(APIView):
@@ -80,5 +80,16 @@ class RecipeDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class OrderDetail(APIView):
+     def get(self, request):
+        Order = DeliveryOrder.objects.all()
+        serializer = serializers.DeliveryForm(Order)
+        return Response(serializer.data)
 
 
+     def post(self, request):
+        serializer = serializers.DeliveryForm(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'msg':'Order Recieved'})
+        return Response(serializer.errors)

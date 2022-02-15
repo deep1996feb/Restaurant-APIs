@@ -53,3 +53,9 @@ def create(self, validated_data):
 # class Meta:
 #         model = models.Recipe
 #         fields = ['id', 'name', 'type', 'thumbnail', 'ingredients']
+
+class DeliveryForm(serializers.ModelSerializer):
+    class Meta:
+        models = models.DeliveryOrder
+        fields = ['user', 'order', 'address', 'city', 'state', 'zipcode', 'dateadd']
+

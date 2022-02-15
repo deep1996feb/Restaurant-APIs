@@ -6,5 +6,6 @@ urlpatterns = [
     path('restaurant/<str:restaurant_id>/', views.RestaurantDetail.as_view()),
     path('restaurant/<str:restaurant_id>/recipes/', views.Recipes.as_view()),
     path('restaurant/<str:restaurant_id>/recipes/<str:recipe_id>/', views.RecipeDetail.as_view()), 
+    path('order/', views.OrderDetail.as_view()),
 ]
 
